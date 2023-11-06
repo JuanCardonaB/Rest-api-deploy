@@ -1,4 +1,4 @@
-const z = require('zod')
+import z from 'zod'
 
 const shemaMovie = z.object({
   title: z.string({
@@ -17,15 +17,10 @@ const shemaMovie = z.object({
   )
 })
 
-const validation = (object) => {
+export const validation = (object) => {
   return shemaMovie.safeParse(object)
 }
 
-const validationPartialMovie = (object) => {
+export const validationPartialMovie = (object) => {
   return shemaMovie.partial().safeParse(object) // partial() hace que todas las propiedades sean opcionales
-}
-
-module.exports = {
-  validation,
-  validationPartialMovie
 }

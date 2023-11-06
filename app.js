@@ -1,12 +1,21 @@
-const express = require('express')
+import express, { json } from 'express'
+import { randomUUID } from 'node:crypto'
+import { validation, validationPartialMovie } from './schemmes/schemmaMovie.js'
+import cors from 'cors'
+
+// forma de importar json en ecma script modules
+//import fs from 'node:fs'
+//const moviesJSON = JSON.parse(fs.readFileSync('./movies.json', 'utf-8'))
+
+
+// FORMA CORRECTA PARA IMPORTAR JSON EN ESCmodules
+import { createRequire } from 'node:module'
+const require = createRequire(import.meta.url)
 const moviesJSON = require('./movies.json')
-const crypto = require('node:crypto')
-const { validation, validationPartialMovie } = require('./schemmes/schemmaMovie')
-const cors = require('cors')
 
 const app = express()
 
-app.use(express.json())
+app.use(json())
 app.use(cors({
   origin: (origin, callback) => {
     const ACCEPTED_ORIGINS = [
@@ -63,7 +72,7 @@ app.post('/movies', (req, res) => {
   }
 
   const newMovie = {
-    id: crypto.randomUUID(), // crea una id unica
+    id: randomUUID(), // crea una id unica
     ...result.data
   }
 
