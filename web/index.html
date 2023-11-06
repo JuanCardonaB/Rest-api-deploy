@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movies</title>
+    <style>
+        img{
+            width: 200px;
+            height: 400px;
+        }
+
+        body{
+            background-color: #222;
+            color: white;
+        }
+    </style>
+
+    <script type="module">
+        fetch('http://localhost:1234/movies')
+        .then(res => res.json())
+        .then(movies => {
+            const html = movies.map(movie => {
+                return `
+                    <article data-id="${movie.id}">
+                        <img src="${movie.poster}">
+                        <h2>${movie.title}</h2>
+                        <p>${movie.year}</p>
+                        <button>Eliminar</button>
+                    </article>
+
+                `
+            }).join(' ')
+
+            document.querySelector('main').innerHTML = html
+
+            document.addEventListener('click', (e)=>{
+                if(e.target.matches('button')){
+                    const article = e.target.closest('article')
+                    const id = article.dataset.id
+
+                    fetch(`http://localhost:1234/movies/${id}`, {
+                        method: 'DELETE'
+                    })
+                    .then(res => {
+                        if(res.ok){
+                            article.remove()
+                        }
+                    })
+                }
+            })
+        })
+    </script>
+</head>
+<body>
+    <!-- npx servor ./web  comando para lanzar la app-->
+    <main class="main"></main>
+</body>
+</html>
