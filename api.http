@@ -24,7 +24,7 @@ Content-Type: application/json
 }
 
 ### actualizar pelicula
-PATCH  http://localhost:1234/movies/dcdd0fad-a94c-4810-8acc-5f108d3b18c3
+PATCH  http://localhost:1234/movies/f59e2d4f-7938-47d2-a31b-a9363774301c
 Content-Type: application/json
 
 {
